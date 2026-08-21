@@ -25,7 +25,7 @@ local teamview = SafeRequire("teamview")
 local health = SafeRequire("health")
 local webhook = SafeRequire("webhook")
 
-local framerate = 0.5;
+local framerate = 2;
 local secondDelay = 1 / framerate;
 local webhook_senddelay = 10;
 
@@ -120,7 +120,7 @@ local function writeBio()
 end
 local timerConut = 0
 writeBio()
-os.startTimer(framerate)
+os.startTimer(secondDelay)
 repeat
     local event, side, x, y = os.pullEventRaw();
     if event == "timer" then
@@ -132,7 +132,7 @@ repeat
                 webhook.SendPosition(posArray, health);
             end
         end
-        os.startTimer(framerate)
+        os.startTimer(secondDelay)
     elseif event == "monitor_touch" then
         local button = GetPressedButton(x)
         if (#posArray >= y) then

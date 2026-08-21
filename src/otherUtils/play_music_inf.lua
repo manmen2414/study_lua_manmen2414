@@ -1,5 +1,32 @@
+local args = { ... };
 local musics = {}
+
+---@param readpath string
+local function loadList(readpath)
+    local path = readpath;
+    if not fs.exists(path) then
+        path = path .. ".mplaylist";
+    end
+    local file = fs.open(path, "r")
+    local skipped = false
+    while true do
+        local line = file.readLine()
+        if not line then break end
+        if skipped then
+            musics[#musics + 1] = line
+            print("Adding music...")
+        else
+            skipped = true
+        end
+    end
+    file.close()
+end
+
 while true do
+    if args[1] then
+        loadList(args[1])
+        break;
+    end
     term.clear()
     term.setCursorPos(1, 1)
     print("You can get .dfpwm file on \nhttps://music.madefor.cc/")
@@ -31,20 +58,8 @@ while true do
         term.clear()
         term.setCursorPos(1, 1)
         print("Please type .mplaylist path")
-        local path = read()
-        local file = fs.open(path, "r")
-        local skipped = false
-        while true do
-            local line = file.readLine()
-            if not line then break end
-            if skipped then
-                musics[#musics + 1] = line
-                print("Adding music...")
-            else
-                skipped = true
-            end
-        end
-        file.close()
+        local readpath = read()
+        loadList(readpath);
         print("-End!")
     else
         musics[#musics + 1] = musicurl

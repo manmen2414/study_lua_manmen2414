@@ -1,0 +1,6 @@
+return {
+  DISCORD_WEBHOOK = "",
+  NAME = "",
+  PERCENTAGE_ERROR = 100,
+  PERCENTAGE_CLEAN = 75,
+}
